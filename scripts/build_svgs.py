@@ -48,11 +48,11 @@ HEADER_USER = "diogo@diogoslsceno"
 # tuple). "age_data" is intentionally excluded: today.py recalculates it
 # automatically from BIRTHDAY on every Action run (see CONTEXT.md).
 VALUES = {
-    "os_value": "Linux (Ubuntu 26.04 LTS)",
+    "os_value": "Linux (Ubuntu 26.04.1 LTS)",
     "host_value": "None, Inc.",
     "kernel_value": "Student (Diogo Sales UFPA)",
     "ide_value": "Vim 9.2.0875, VS Code 1.132",
-    "languages_programming_value": "C, Java, Dart, Python",
+    "languages_programming_value": "C, Java, Python",
     "languages_computer_value": "Linux, Docker, Git, GitHub",
     "languages_real_value": "PT-BR (Native), EN (Intermediate)",
     "hobbies_software_value": "Programming Projects, Learning ML",
