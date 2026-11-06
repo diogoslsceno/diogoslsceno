@@ -46,7 +46,7 @@ text, tspan {white-space: pre;}
 <tspan x="390" y="70" class="cc">. </tspan><tspan class="key">Uptime</tspan>:<tspan class="cc" id="age_data_dots"> ..................... </tspan><tspan class="value" id="age_data">22 years, 0 months, 0 days 🎂</tspan>
 <tspan x="390" y="90" class="cc">. </tspan><tspan class="key">Host</tspan>:<tspan class="cc" id="host_dots"> ......................................... </tspan><tspan class="value" id="host_value">None, Inc.</tspan>
 <tspan x="390" y="110" class="cc">. </tspan><tspan class="key">Kernel</tspan>:<tspan class="cc" id="kernel_dots"> ....................... </tspan><tspan class="value" id="kernel_value">Student (Diogo Sales UFPA)</tspan>
-<tspan x="390" y="130" class="cc">. </tspan><tspan class="key">IDE</tspan>:<tspan class="cc" id="ide_dots"> ......................... </tspan><tspan class="value" id="ide_value">Vim 9.2.0875, VS Code 1.132</tspan>
+<tspan x="390" y="130" class="cc">. </tspan><tspan class="key">IDE</tspan>:<tspan class="cc" id="ide_dots"> ......................... </tspan><tspan class="value" id="ide_value">Vim 9.2.1302, VS Code 1.145</tspan>
 <tspan x="390" y="150" class="cc">. </tspan>
 <tspan x="390" y="170" class="cc">. </tspan><tspan class="key">Languages</tspan>.<tspan class="key">Programming</tspan>:<tspan class="cc" id="languages_programming_dots"> ................... </tspan><tspan class="value" id="languages_programming_value">C, Java, Python</tspan>
 <tspan x="390" y="190" class="cc">. </tspan><tspan class="key">Languages</tspan>.<tspan class="key">Computer</tspan>:<tspan class="cc" id="languages_computer_dots"> ........... </tspan><tspan class="value" id="languages_computer_value">Linux, Docker, Git, GitHub</tspan>

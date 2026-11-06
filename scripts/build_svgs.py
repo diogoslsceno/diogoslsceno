@@ -51,7 +51,7 @@ VALUES = {
     "os_value": "Linux (Ubuntu 26.04.1 LTS)",
     "host_value": "None, Inc.",
     "kernel_value": "Student (Diogo Sales UFPA)",
-    "ide_value": "Vim 9.2.0875, VS Code 1.132",
+    "ide_value": "Vim 9.2.1302, VS Code 1.145",
     "languages_programming_value": "C, Java, Python",
     "languages_computer_value": "Linux, Docker, Git, GitHub",
     "languages_real_value": "PT-BR (Native), EN (Intermediate)",
@@ -311,11 +311,37 @@ def make_svg(theme_name):
     return "\n".join(parts) + "\n"
 
 
+def _read_existing_dynamic_values(svg_path):
+    """Read current dynamic values from an existing SVG so rebuilds don't zero them out."""
+    if not svg_path.exists():
+        return None
+    try:
+        root = today.parse(svg_path).getroot()
+        return {
+            "age_data": today.svg_visible_text(today.require_svg_element(root, "age_data")),
+            "commit_data": today.svg_visible_text(today.require_svg_element(root, "commit_data")),
+            "star_data": today.svg_visible_text(today.require_svg_element(root, "star_data")),
+            "repo_data": today.svg_visible_text(today.require_svg_element(root, "repo_data")),
+            "contrib_data": today.svg_visible_text(today.require_svg_element(root, "contrib_data")),
+            "follower_data": today.svg_visible_text(today.require_svg_element(root, "follower_data")),
+            "loc_data": [
+                today.svg_visible_text(today.require_svg_element(root, "loc_add")),
+                today.svg_visible_text(today.require_svg_element(root, "loc_del")),
+                today.svg_visible_text(today.require_svg_element(root, "loc_data")),
+            ],
+        }
+    except Exception:
+        return None
+
+
 def main():
     repo_root = pathlib.Path(__file__).resolve().parent.parent
     for theme in ("light", "dark"):
         out_path = repo_root / f"{theme}_mode.svg"
+        existing = _read_existing_dynamic_values(out_path)
         out_path.write_text(make_svg(theme), encoding="utf-8")
+        if existing is not None:
+            today.svg_overwrite(out_path, **existing)
         print(f"wrote {out_path}")
 
 
