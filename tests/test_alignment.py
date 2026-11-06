@@ -326,11 +326,13 @@ class CleanupAndWorkflowTests(unittest.TestCase):
         paths = (
             Path("today.py"),
             Path("generate_readme.py"),
+            Path("scripts/build_svgs.py"),
             Path("dark_mode.svg"),
             Path("light_mode.svg"),
             Path("tests/__init__.py"),
             Path("tests/test_alignment.py"),
             Path(".github/workflows/build.yaml"),
+            Path(".github/workflows/pacman.yaml"),
         )
         for path in paths:
             with self.subTest(path=path):

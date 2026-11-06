@@ -11,6 +11,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: pacman-graph
+  cancel-in-progress: true
+
 jobs:
   generate:
     runs-on: ubuntu-latest

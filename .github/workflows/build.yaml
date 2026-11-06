@@ -8,6 +8,9 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
+concurrency:
+  group: readme-build
+  cancel-in-progress: true
 jobs:
   build:
     runs-on: ubuntu-latest

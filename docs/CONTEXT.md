@@ -10,11 +10,13 @@ run the test suite before telling me it's done.
 ## 1. What this repository is
 
 This is `diogoslsceno/diogoslsceno` -- a GitHub "profile README" repository.
-Its `README.md` embeds two SVG cards (`light_mode.svg` and `dark_mode.svg`,
-chosen automatically by the visitor's OS/browser theme) that render a
-neofetch-style summary: an ASCII art portrait on the left, and system-info
-style fields (OS, Uptime, languages, hobbies, contact) plus live GitHub
-statistics on the right.
+Its `README.md` embeds:
+1. Two neofetch-style SVG cards (`light_mode.svg` and `dark_mode.svg`, chosen
+   automatically by the visitor's OS/browser theme) with an ASCII art portrait
+   on the left and system-info fields + live GitHub statistics on the right.
+2. Two animated Pac-Man contribution graph SVGs (`pacman-contribution-graph.svg`
+   and `pacman-contribution-graph-dark.svg`, served from the `output` branch)
+   where Pac-Man eats the contribution grid blocks.
 
 It was forked from `Vikbg/Vikbg` (Apache-2.0). The `docs/NOTICE` file carries the
 required attribution to that original project -- keep it if you ever
@@ -23,34 +25,39 @@ redistribute this repo or a derivative of it.
 ## 2. File map
 
 ```
-today.py                   Core engine: SVG parsing/editing, GitHub GraphQL
-                            + REST queries, age calculation, dot-leader
-                            alignment. This is what actually runs in CI.
-generate_readme.py         Thin entrypoint the Action calls. Wraps today.py
-                            with the private-stats-in-memory-only privacy
-                            guarantee described in its own docstring.
-scripts/build_svgs.py       Regenerates dark_mode.svg / light_mode.svg from
-                            plain Python data. THIS is how you edit the
-                            static text on the card. See section 4.
-light_mode.svg              Committed, ready-to-render output of
-dark_mode.svg               scripts/build_svgs.py. Don't hand-edit these.
-tests/                      32+ automated tests. Must pass before every
-                            commit (the Action also runs them first and will
-                            refuse to update the README if they fail).
+today.py                      Core engine: SVG parsing/editing, GitHub GraphQL
+                              + REST queries, age calculation, dot-leader
+                              alignment. This is what actually runs in CI.
+generate_readme.py            Thin entrypoint the Action calls. Wraps today.py
+                              with the private-stats-in-memory-only privacy
+                              guarantee described in its own docstring.
+scripts/build_svgs.py         Regenerates dark_mode.svg / light_mode.svg from
+                              plain Python data while preserving existing
+                              dynamic stats. THIS is how you edit the static
+                              text on the card. See section 4.
+light_mode.svg                Committed, ready-to-render output of
+dark_mode.svg                 scripts/build_svgs.py. Don't hand-edit these.
+tests/                        34 automated tests. Must pass before every
+                              commit (the Action also runs them first and will
+                              refuse to update the README if they fail).
 .github/workflows/build.yaml  Daily cron (04:00 UTC) + push + manual trigger.
-                            Runs tests, regenerates the dynamic fields
-                            (Uptime, GitHub Stats), commits if anything
-                            changed. See section 6 for the permissions model.
-cache/                      requirements.txt, plus a per-user hashed cache
-                            file the Action maintains at runtime (tracks
-                            which public repos have already been counted, so
-                            the LOC/commit stats don't need to be
-                            recalculated from scratch every day). Don't hand
-                            edit the hash file; it's regenerated automatically.
-docs/                       Project documentation (CONTEXT.md), license
-                            (LICENSE), and attribution notice (NOTICE).
-README.md                   Just the <picture>/<img> wrapper that embeds the
-                            two SVGs from raw.githubusercontent.com.
+                              Runs tests, regenerates the dynamic fields
+                              (Uptime, GitHub Stats), commits if anything
+                              changed. See section 6 for the permissions model.
+.github/workflows/pacman.yaml Daily cron (04:00 UTC) + push + manual trigger.
+                              Generates the animated Pac-Man contribution SVGs
+                              and pushes them to the dedicated `output` branch.
+cache/                        requirements.txt, plus a per-user hashed cache
+                              file the Action maintains at runtime (tracks
+                              which public repos have already been counted, so
+                              the LOC/commit stats don't need to be
+                              recalculated from scratch every day). Don't hand
+                              edit the hash file; it's regenerated automatically.
+docs/                         Project documentation (CONTEXT.md), license
+                              (LICENSE), and attribution notice (NOTICE).
+README.md                     The <picture>/<img> wrapper that embeds the
+                              neofetch SVGs (from `main`) and the Pac-Man
+                              contribution graph SVGs (from `output`).
 ```
 
 ## 3. Static data vs. live data -- read this before "fixing" a stale number
@@ -103,33 +110,13 @@ that's happened in this project's history it introduced a rendering bug
 (see section 7) that wasn't caught until someone looked at the rendered
 card.
 
-## 5. Pending update: Ubuntu 26.04.1 LTS
+## 5. Completed update: Ubuntu 26.04.1 LTS
 
-The `os_value` field currently reads `Linux (Ubuntu 26.04 LTS)`. Ubuntu
-26.04's first point release, **26.04.1 LTS**, is scheduled for **27 August
-2026**. (It was originally announced for 4 August 2026, then officially
-pushed back to 6 August, then delayed again to 27 August -- Canonical had
-not published a public reason for the second delay as of early September
-2026. If you're reading this well after that date, quickly check whether it
-actually shipped on schedule before making the change -- point releases have
-slipped before.)
-
-**When 26.04.1 has actually shipped**, update it like this:
-
-1. In `scripts/build_svgs.py`, change:
-   ```python
-   "os_value": "Linux (Ubuntu 26.04 LTS)",
-   ```
-   to:
-   ```python
-   "os_value": "Linux (Ubuntu 26.04.1 LTS)",
-   ```
-2. Regenerate and test as described in section 4.
-
-Don't jump ahead of the actual release date -- verify (e.g. a quick web
-search for "Ubuntu 26.04.1 LTS release notes") that it has shipped before
-changing the text, since this specific point release has already slipped
-twice.
+The `os_value` field in `scripts/build_svgs.py` has already been updated to
+`Linux (Ubuntu 26.04.1 LTS)` following the point release. For future Ubuntu
+point releases (e.g. `26.04.2 LTS`), verify that the release has officially
+shipped before updating `os_value` in `scripts/build_svgs.py` and regenerating
+the SVGs as described in section 4.
 
 ## 6. GitHub Actions permissions -- why this matters
 
@@ -199,6 +186,12 @@ way that reintroduces one of these:
   instead of maintaining a second copy of the id list, so this class of bug
   is now structurally impossible -- keep it that way.
 - **A workflow that fails without ACCESS_TOKEN.** Covered in section 6.
+- **Merge conflicts in the GitHub Stats block when rebuilding SVGs.** Earlier
+  versions of `scripts/build_svgs.py` overwrote all dynamic stats with `0`
+  placeholders, which conflicted with `github-actions[bot]` commits if you
+  pulled/rebased after a run. `scripts/build_svgs.py` now reads and preserves
+  the existing dynamic values from the SVG files via
+  `_read_existing_dynamic_values()` whenever it regenerates them.
 
 ## 8. Testing
 
