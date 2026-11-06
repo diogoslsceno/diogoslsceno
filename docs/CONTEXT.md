@@ -1,6 +1,6 @@
 # CONTEXT.md -- read this before touching anything in this repository
 
-This file exists so that a future version of me (Diogo), or any AI assistant
+This file (`docs/CONTEXT.md`) exists so that a future version of me (Diogo), or any AI assistant
 helping me, can pick this project back up without re-deriving everything from
 scratch or reintroducing bugs that were already found and fixed. If you are
 an AI reading this to make a change: read this whole file first, make the
@@ -16,7 +16,7 @@ neofetch-style summary: an ASCII art portrait on the left, and system-info
 style fields (OS, Uptime, languages, hobbies, contact) plus live GitHub
 statistics on the right.
 
-It was forked from `Vikbg/Vikbg` (Apache-2.0). The `NOTICE` file carries the
+It was forked from `Vikbg/Vikbg` (Apache-2.0). The `docs/NOTICE` file carries the
 required attribution to that original project -- keep it if you ever
 redistribute this repo or a derivative of it.
 
@@ -47,9 +47,10 @@ cache/                      requirements.txt, plus a per-user hashed cache
                             the LOC/commit stats don't need to be
                             recalculated from scratch every day). Don't hand
                             edit the hash file; it's regenerated automatically.
+docs/                       Project documentation (CONTEXT.md), license
+                            (LICENSE), and attribution notice (NOTICE).
 README.md                   Just the <picture>/<img> wrapper that embeds the
                             two SVGs from raw.githubusercontent.com.
-NOTICE, LICENSE             Apache-2.0 + required attribution. Keep both.
 ```
 
 ## 3. Static data vs. live data -- read this before "fixing" a stale number

@@ -1,7 +1,7 @@
 """Copyright 2026 Vikbg.
 
 SPDX-License-Identifier: Apache-2.0
-Keep the attribution notice from the repository NOTICE file when redistributing.
+Keep the attribution notice from the repository docs/NOTICE file when redistributing.
 """
 
 import datetime

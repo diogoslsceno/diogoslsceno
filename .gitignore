@@ -1,7 +1,33 @@
+# Environment variables and secrets
 .env
+.env.*
+*.pem
+*.key
+.secrets
+.token
+secrets.*
 
-# Python cache
+# Python cache and virtual environments
 __pycache__/
 *.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
 
+# IDEs, editors and OS files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# AI / agent scratch files
 .codex

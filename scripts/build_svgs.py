@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Regenerate ``dark_mode.svg`` and ``light_mode.svg`` from the data below.
 
-Read ``CONTEXT.md`` (repository root) before touching this file.
+Read ``docs/CONTEXT.md`` before touching this file.
 
 Design goal: every past bug in this project's SVGs (dot-leader padding not
 reaching the target width, the header separator line stopping short after the
